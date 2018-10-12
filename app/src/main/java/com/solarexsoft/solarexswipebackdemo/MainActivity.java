@@ -1,6 +1,7 @@
 package com.solarexsoft.solarexswipebackdemo;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -34,16 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         rv_main.setItemAnimator(new DefaultItemAnimator());
-        List<Integer> imgs = new ArrayList<>();
-        imgs.add(R.drawable.img_avatar_01);
-        imgs.add(R.drawable.img_avatar_02);
-        imgs.add(R.drawable.img_avatar_03);
-        imgs.add(R.drawable.img_avatar_04);
-        imgs.add(R.drawable.img_avatar_06);
-        imgs.add(R.drawable.img_avatar_07);
+        List<Integer> imgs = getData();
         mAdapter = new CardAdapter(imgs);
 
-        CardItemTouchHelperCallback itemTouchHelperCallback = new CardItemTouchHelperCallback
+        final CardItemTouchHelperCallback itemTouchHelperCallback = new CardItemTouchHelperCallback
                 (mAdapter, imgs);
         itemTouchHelperCallback.setOnSwipedListener(new OnSwipeListener() {
             @Override
@@ -72,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwipedClear() {
                 Toast.makeText(MainActivity.this, "Swipe clear", Toast.LENGTH_SHORT).show();
+                rv_main.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                       List<Integer> imgs = getData();
+                       mAdapter.setData(imgs);
+                       itemTouchHelperCallback.setAdapter(mAdapter);
+                       itemTouchHelperCallback.setData(imgs);
+                    }
+                }, 1000);
             }
         });
         final ItemTouchHelper touchHelper = new ItemTouchHelper(itemTouchHelperCallback);
@@ -79,5 +83,17 @@ public class MainActivity extends AppCompatActivity {
         rv_main.setLayoutManager(cardLayoutManager);
         touchHelper.attachToRecyclerView(rv_main);
         rv_main.setAdapter(mAdapter);
+    }
+
+    @NonNull
+    private List<Integer> getData() {
+        List<Integer> imgs = new ArrayList<>();
+        imgs.add(R.drawable.img_avatar_01);
+        imgs.add(R.drawable.img_avatar_02);
+        imgs.add(R.drawable.img_avatar_03);
+        imgs.add(R.drawable.img_avatar_04);
+        imgs.add(R.drawable.img_avatar_06);
+        imgs.add(R.drawable.img_avatar_07);
+        return imgs;
     }
 }

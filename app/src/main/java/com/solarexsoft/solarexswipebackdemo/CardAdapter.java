@@ -43,4 +43,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
         }
         return 0;
     }
+
+    public void setData(List<Integer> data) {
+        mData = data;
+        notifyDataSetChanged();
+    }
 }

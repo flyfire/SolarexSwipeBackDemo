@@ -16,7 +16,7 @@ import java.util.List;
  * </pre>
  */
 public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
-    private final RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter adapter;
     private List<T> dataList;
     private OnSwipeListener<T> mListener;
 
@@ -135,5 +135,13 @@ public class CardItemTouchHelperCallback<T> extends ItemTouchHelper.Callback {
 
     private float getThreshold(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
         return recyclerView.getWidth() * getSwipeThreshold(viewHolder);
+    }
+
+    public void setAdapter(RecyclerView.Adapter viewAdapter) {
+        this.adapter = viewAdapter;
+    }
+
+    public void setData(List<T> data) {
+        this.dataList = data;
     }
 }
