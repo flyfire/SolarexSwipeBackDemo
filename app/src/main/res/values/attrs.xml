@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="RoundImageView">
+        <attr name="radius" format="dimension"/>
+    </declare-styleable>
+</resources>
